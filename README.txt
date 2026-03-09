@@ -1,1 +1,1 @@
-A simple python keylogger script that captures the owners keystroke as well as the associated window receiving those keystrokes. Uses python3 default libraries.
+A simple python keylogger script that captures the owners keystroke as well as the associated window receiving those keystrokes. Uses third party library -pynput and -pyGetWindow along with the python standard library.
