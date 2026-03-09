@@ -1,0 +1,1 @@
+A simple python keylogger script that captures the owners keystroke as well as the associated window receiving those keystrokes. Uses python3 default libraries.
